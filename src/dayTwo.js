@@ -55,4 +55,48 @@ const getScore = (arr) => {
   return yourScore;
 };
 
-console.log(getScore(data));
+const getScoreStrategy = (arr) => {
+  let yourScore = 0;
+  arr.forEach((x) => {
+    switch (x[1]) {
+      //Lose
+      case 'X':
+        if (x[0] == 'A') {
+          yourScore += 3;
+        }
+        if (x[0] == 'B') {
+          yourScore += 1;
+        }
+        if (x[0] == 'C') {
+          yourScore += 2;
+        }
+        break;
+      //Draw
+      case 'Y':
+        if (x[0] == 'A') {
+          yourScore += 4;
+        }
+        if (x[0] == 'B') {
+          yourScore += 5;
+        }
+        if (x[0] == 'C') {
+          yourScore += 6;
+        }
+        break;
+      //Win
+      case 'Z':
+        if (x[0] == 'A') {
+          yourScore += 8;
+        }
+        if (x[0] == 'B') {
+          yourScore += 9;
+        }
+        if (x[0] == 'C') {
+          yourScore += 7;
+        }
+    }
+  });
+  return yourScore;
+};
+
+console.log(getScoreStrategy(data));
