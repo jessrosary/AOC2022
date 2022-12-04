@@ -1,7 +1,5 @@
 import { readFileSync } from 'fs';
 import _ from 'lodash';
-// import { chunk } from 'lodash';
-//  const { throttle } = lodash;
 
 // Part One
 
@@ -9,7 +7,7 @@ const halfIndex = (str) => {
   return Math.ceil(str.length / 2);
 };
 
-const data = readFileSync('./data/input03.txt', 'utf8')
+const data = readFileSync('./data/input04.txt', 'utf8')
   .trim()
   .split('\n')
   .map((line) => {
