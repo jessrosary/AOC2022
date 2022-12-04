@@ -11,6 +11,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "esm": "^3.2.25",
     "prettier": "^2.8.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }
