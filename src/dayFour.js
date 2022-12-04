@@ -7,7 +7,8 @@ const data = readFileSync('./data/input04.txt', 'utf8')
     line.split(',').map((arr) => arr.split('-').map((int) => parseInt(int, 10)))
   );
 
-const checkRangeOverlap = (arr) => {
+//Part One
+const checkRangeEncompass = (arr) => {
   let count = 0;
   arr.map((x) => {
     const leftMin = x[0][0];
@@ -17,6 +18,23 @@ const checkRangeOverlap = (arr) => {
     if (leftMin <= rightMin && leftMax >= rightMax) {
       count += 1;
     } else if (rightMin <= leftMin && rightMax >= leftMax) {
+      count += 1;
+    }
+  });
+  return count;
+};
+
+//Part Two
+const checkRangeOverlap = (arr) => {
+  let count = 0;
+  arr.map((x) => {
+    const leftMin = x[0][0];
+    const leftMax = x[0][1];
+    const rightMin = x[1][0];
+    const rightMax = x[1][1];
+    if (leftMin <= rightMin && rightMin <= leftMax) {
+      count += 1;
+    } else if (rightMin <= leftMin && leftMin <= rightMax) {
       count += 1;
     }
   });
