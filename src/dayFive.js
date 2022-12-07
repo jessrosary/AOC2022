@@ -43,7 +43,7 @@ for (const move of directions) {
   const numCrates = move[0];
   const fromIndex = move[1] - 1;
   const toIndex = move[2] - 1;
-  let crates = stacks[fromIndex].splice(-numCrates);
+  let crates = stacks[fromIndex].splice(-numCrates); //.reverse(); Part One
   stacks[toIndex].push(...crates);
 }
 
