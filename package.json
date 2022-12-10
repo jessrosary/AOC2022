@@ -11,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/treeify": "^1.0.0",
     "esm": "^3.2.25",
-    "prettier": "^2.8.0"
+    "prettier": "^2.8.0",
+    "treeify": "^1.1.0"
   },
   "dependencies": {
     "lodash": "^4.17.21"
