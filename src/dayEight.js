@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs';
+import _ from 'lodash';
 
 /*
 Parse data into map with grid in this shape:
@@ -139,16 +140,115 @@ const getVisibleFromEdge = (map) => {
   return visible;
 };
 
+const leftView = (map, [x, y]) => {
+  const row = map.grid[x];
+  const tree = row[y];
+
+  let viewCount = 0;
+  for (let i = y - 1; i >= 0; i--) {
+    viewCount++;
+
+    const leftTree = row[i];
+    if (tree <= leftTree) {
+      break;
+    }
+  }
+
+  return viewCount;
+};
+
+const rightView = (map, [x, y]) => {
+  const row = map.grid[x];
+  const tree = row[y];
+
+  let viewCount = 0;
+  for (let i = y + 1; i <= map.lastY; i++) {
+    viewCount++;
+
+    const rightTree = row[i];
+    if (tree <= rightTree) {
+      break;
+    }
+  }
+
+  return viewCount;
+};
+
+const topView = (map, [x, y]) => {
+  const grid = map.grid;
+  const tree = grid[x][y];
+
+  let viewCount = 0;
+  for (let i = x - 1; i >= 0; i--) {
+    viewCount++;
+
+    const topTree = grid[i][y];
+    if (tree <= topTree) {
+      break;
+    }
+  }
+
+  return viewCount;
+};
+
+const bottomView = (map, [x, y]) => {
+  const grid = map.grid;
+  const tree = grid[x][y];
+
+  let viewCount = 0;
+  for (let i = x + 1; i <= map.lastX; i++) {
+    viewCount += 1;
+
+    const bottomTree = grid[i][y];
+    if (tree <= bottomTree) {
+      break;
+    }
+  }
+
+  return viewCount;
+};
+
+const getScores = (map) => {
+  let scores = [];
+  const grid = map.grid;
+  for (let i = 1; i < grid.length - 1; i++) {
+    const row = grid[i];
+    for (let j = 1; j < row.length - 1; j++) {
+      const tree = row[j];
+
+      const [left, right, top, bottom] = [
+        leftView(map, [i, j]),
+        rightView(map, [i, j]),
+        topView(map, [i, j]),
+        bottomView(map, [i, j]),
+      ];
+
+      let score = [left, right, top, bottom].reduce((sum, n) => sum * n, 1);
+
+      scores.push({
+        position: [i, j],
+        score,
+        tree,
+        // scores: { l: left, r: right, t: top, b: bottom },
+      });
+    }
+  }
+  return scores;
+};
+
 // Main
 
 const inputData = readFileSync('./data/input08.txt', 'utf8');
 const testData = readFileSync('./data/testinput08.txt', 'utf8');
 
 const map = parseMap(inputData);
-// console.log(map);
 
+// Part One
 const visibles = getVisibleFromEdge(map);
-console.log({
-  'visibles[0..10]': visibles.slice(0, 10),
-  count: visibles.length,
-});
+const visibleFromEdge = visibles.length;
+
+// Part Two
+const scores = _.orderBy(getScores(map), ['score'], 'desc');
+const topScore = scores[0].score;
+
+console.log({ visibleFromEdge, topScore });
